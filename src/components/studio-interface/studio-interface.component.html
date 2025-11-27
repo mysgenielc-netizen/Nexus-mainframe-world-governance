@@ -1,0 +1,96 @@
+<section class="bg-gray-800 rounded-xl p-6 mb-8 border border-gray-700">
+  <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+    <app-icon name="terminal" class="w-6 h-6 text-green-400"></app-icon>
+    AI Studio: Semantic Query Interface
+  </h2>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Left Panel: Query Formulation -->
+    <div class="bg-gray-900 rounded-lg p-4 border border-gray-700 flex flex-col gap-4">
+      <h3 class="font-bold text-lg text-green-400">1. Formulate Query</h3>
+      
+      <div>
+        <label for="objective" class="block text-sm font-medium text-gray-300 mb-1">Objective</label>
+        <textarea id="objective" name="objective" rows="4"
+          [(ngModel)]="query.objective"
+          class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2 text-white focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+      </div>
+
+      <div>
+        <label for="context" class="block text-sm font-medium text-gray-300 mb-1">Context (JSON)</label>
+        <textarea id="context" name="context" rows="8"
+          [(ngModel)]="query.context"
+          class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2 font-mono text-sm text-white focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="priority" class="block text-sm font-medium text-gray-300 mb-1">Priority</label>
+          <select id="priority" name="priority"
+            [(ngModel)]="query.priority"
+            class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2 text-white focus:outline-none focus:ring-2 focus:ring-green-500">
+            <option>low</option>
+            <option>normal</option>
+            <option>high</option>
+            <option>critical</option>
+          </select>
+        </div>
+        <div>
+          <label for="requester" class="block text-sm font-medium text-gray-300 mb-1">Requester ID</label>
+          <input type="text" id="requester" name="requester"
+            [(ngModel)]="query.metadata.requester_id"
+            class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2 text-white focus:outline-none focus:ring-2 focus:ring-green-500" />
+        </div>
+      </div>
+
+      <button (click)="sendQuery()" [disabled]="isLoading()"
+        class="w-full bg-green-600 text-white font-bold rounded-lg p-3 disabled:bg-green-900 disabled:cursor-not-allowed hover:bg-green-700 transition-colors flex items-center justify-center gap-2">
+        @if(isLoading()) {
+          <app-icon name="loader-2" class="w-6 h-6 animate-spin"></app-icon>
+          <span>Processing...</span>
+        } @else {
+          <span>Send Semantic Query</span>
+        }
+      </button>
+    </div>
+
+    <!-- Right Panel: Status & Response -->
+    <div class="bg-gray-900 rounded-lg p-4 border border-gray-700 flex flex-col gap-4">
+      <div>
+        <h3 class="font-bold text-lg text-cyan-400 mb-2">2. Oversight & Status Log</h3>
+        <div class="bg-black rounded-md p-3 font-mono text-xs text-gray-400 h-32 overflow-y-auto">
+          @for(log of statusLog(); track $index) {
+            <p>{{ log }}</p>
+          }
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="font-bold text-lg text-purple-400 mb-2">3. System Response</h3>
+        <div class="bg-black rounded-md p-3 font-mono text-sm text-white h-64 overflow-y-auto">
+          @if(response(); as res) {
+            <pre class="whitespace-pre-wrap break-words">{{ prettyPrint(res) }}</pre>
+          } @else if(isLoading()) {
+            <p class="text-gray-500">Awaiting response from Unified Nexus Meta-Framework...</p>
+          } @else {
+             <p class="text-gray-500">Response will appear here.</p>
+          }
+        </div>
+      </div>
+
+      <div>
+        <h3 class="font-bold text-lg text-yellow-400 mb-2">4. AI Studio Feedback Loop</h3>
+        <div class="bg-black rounded-md p-3 font-mono text-xs text-yellow-300 h-24 overflow-y-auto">
+          @for(log of feedbackLog(); track $index) {
+            <p>{{ log }}</p>
+          }
+          @if(!isLoading() && response()) {
+            
+          } @else {
+            <p class="text-yellow-700">Feedback loop analysis will begin after a response is received.</p>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

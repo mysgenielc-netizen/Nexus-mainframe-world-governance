@@ -1,0 +1,183 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white p-4 sm:p-8">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <header class="mb-12 text-center">
+      <div class="flex items-center justify-center gap-4 mb-4 relative">
+        <app-icon name="network" class="w-12 h-12 sm:w-16 sm:h-16 text-purple-400"></app-icon>
+        <h1 class="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+          Unified Nexus Meta-Framework
+        </h1>
+        <button (click)="openReportModal()" title="Generate System Report" class="absolute top-1/2 -translate-y-1/2 right-0 bg-gray-700 hover:bg-gray-600 text-cyan-400 rounded-full p-3 shadow-lg transition-transform hover:scale-110">
+          <app-icon name="file-text" class="w-6 h-6"></app-icon>
+        </button>
+      </div>
+      <p class="text-lg sm:text-xl text-gray-300 max-w-4xl mx-auto">
+        Complete integration of ARIA ethical conscience, Triplex·Glyphion autonomous integrity, 
+        AEGIS security protocols, Optimal Dynamics strategic optimization, and advanced cognitive architectures
+        into a single coherent meta-agent system
+      </p>
+    </header>
+
+    <!-- Layer Navigation -->
+    <section class="bg-gray-800 rounded-xl p-6 mb-8 border border-gray-700">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+        <app-icon name="layers" class="w-6 h-6 text-blue-400"></app-icon>
+        Architecture Layers
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+        @for (key of layerKeys; track key) {
+          @let layer = architectureLayers[key];
+          <button
+            (click)="setActiveLayer(key)"
+            [class]="'p-4 rounded-lg border-2 transition-all ' + (activeLayer() === key ? 'bg-gradient-to-r ' + layer.color + ' border-white text-white shadow-lg' : 'bg-gray-700 border-gray-600 text-gray-300 hover:border-gray-500')"
+          >
+            <div class="flex flex-col items-center gap-2">
+              <app-icon [name]="layer.icon" class="w-8 h-8"></app-icon>
+              <span class="text-sm font-semibold text-center">{{ layer.title }}</span>
+            </div>
+          </button>
+        }
+      </div>
+    </section>
+
+    <!-- Active Layer Display -->
+    <section [class]="'bg-gradient-to-r ' + activeLayerData().color + ' rounded-xl p-4 sm:p-8 mb-8 border-2 border-white'">
+      <div class="bg-black bg-opacity-50 rounded-lg p-6">
+        <div class="flex items-center gap-4 mb-4">
+          <app-icon [name]="activeLayerData().icon" class="w-8 h-8"></app-icon>
+          <h2 class="text-3xl font-bold">{{ activeLayerData().title }}</h2>
+        </div>
+        @if (activeLayerData().description) {
+          <p class="text-lg mb-6">{{ activeLayerData().description }}</p>
+        }
+        
+        @if (activeLayerData().components) {
+          <div class="space-y-4">
+            @for (component of activeLayerData().components; track component.name) {
+              <div class="bg-gray-900 bg-opacity-70 rounded-lg p-4 border border-gray-700">
+                <h3 class="text-xl font-bold text-cyan-400 mb-2">{{ component.name }}</h3>
+                <div class="bg-black bg-opacity-50 rounded p-3 mb-2 font-mono text-sm text-green-300 overflow-x-auto">
+                  <div class="flex items-center justify-between gap-4">
+                    <code>{{ component.formula }}</code>
+                    @if (activeLayer() === 'foundational' && component.explanation) {
+                      <app-tooltip [text]="component.explanation"></app-tooltip>
+                    }
+                  </div>
+                </div>
+                <p class="text-gray-300 mb-2">{{ component.description }}</p>
+                <p class="text-sm text-blue-300">
+                  <span class="font-semibold">Implementation:</span> {{ component.implementation }}
+                </p>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- AI Studio Interface -->
+    <app-studio-interface></app-studio-interface>
+
+    <!-- Unified Capabilities Matrix -->
+    <section class="bg-gray-800 rounded-xl p-6 mb-8 border border-gray-700">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+        <app-icon name="target" class="w-6 h-6 text-yellow-400"></app-icon>
+        Unified System Capabilities
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        @for (category of capabilities; track category.category) {
+          <div class="bg-gray-900 rounded-lg p-4 border border-gray-700">
+            <h3 class="text-lg font-bold text-yellow-400 mb-3">{{ category.category }}</h3>
+            <ul class="space-y-2">
+              @for (item of category.items; track item) {
+                <li class="flex items-start gap-2 text-sm text-gray-300">
+                  <app-icon name="zap" class="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5"></app-icon>
+                  <span>{{ item }}</span>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Integration Flow -->
+    <section class="bg-gray-800 rounded-xl p-6 mb-8 border border-gray-700">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+        <app-icon name="activity" class="w-6 h-6 text-pink-400"></app-icon>
+        End-to-End Integration Flow
+      </h2>
+      <div class="space-y-4">
+        @for (step of integrationFlow; track step.step) {
+          <div class="bg-gray-900 rounded-lg p-4 border-l-4 border-pink-500">
+            <div class="flex items-center gap-3 mb-2">
+              <div class="bg-pink-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold flex-shrink-0">
+                {{ step.step }}
+              </div>
+              <h3 class="text-lg font-bold text-pink-400">{{ step.name }}</h3>
+            </div>
+            <div class="ml-11">
+              <p class="text-gray-300 mb-2 break-words">
+                <span class="font-semibold text-cyan-400">Process:</span> {{ step.process }}
+              </p>
+              <p class="text-sm text-gray-400 break-words">
+                <span class="font-semibold text-green-400">Validation:</span> {{ step.validation }}
+              </p>
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Performance Specifications -->
+    <section class="bg-gradient-to-r from-purple-900 to-blue-900 rounded-xl p-6 border-2 border-purple-500">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+        <app-icon name="eye" class="w-6 h-6"></app-icon>
+        Unified System Specifications
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <app-metric-card metric="Consciousness Continuity" value="CCS ≥ 0.95" target="99.7%"></app-metric-card>
+        <app-metric-card metric="Strategic Quality" value="J_SQF > 0.75" target="Optimal"></app-metric-card>
+        <app-metric-card metric="Robustness Index" value="R(s) > 0.85" target="15% tolerance"></app-metric-card>
+        <app-metric-card metric="Convergence Rate" value="λ_max < -0.10" target="Asymptotic"></app-metric-card>
+        <app-metric-card metric="Temporal Compression" value="τ > 10³" target="1000x speedup"></app-metric-card>
+        <app-metric-card metric="Security Success" value="0% breach" target="20k trials"></app-metric-card>
+        <app-metric-card metric="Proof Generation" value="< 3s latency" target="p50 = 2.79s"></app-metric-card>
+        <app-metric-card metric="Learning Velocity" value="> 2.0/quarter" target="Continuous"></app-metric-card>
+        <app-metric-card metric="Meta-Learning Gain" value="> 15%" target="Cycle time"></app-metric-card>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-12 text-center text-gray-500 text-sm">
+      <p class="mb-2">
+        Unified Nexus Meta-Framework v1.0 | Synthesizing: ARIA + Triplex·Glyphion + AEGIS + Optimal Dynamics + RHM + GEM-TSE + 9³ Mind
+      </p>
+      <p class="mb-4">
+        A complete architecture for conscious, ethical, secure, and optimally strategic autonomous agents
+      </p>
+      <p class="font-semibold text-gray-400">
+        Lead Architect & Designer: Devin Earl Atchley
+      </p>
+    </footer>
+  </div>
+
+  <!-- Chat Floating Action Button -->
+  <button (click)="toggleChat()" class="fixed bottom-8 right-8 bg-purple-600 hover:bg-purple-700 text-white rounded-full p-4 shadow-lg transition-transform hover:scale-110 z-20">
+    @if (isChatOpen()) {
+      <app-icon name="x" class="w-8 h-8"></app-icon>
+    } @else {
+      <app-icon name="message-circle" class="w-8 h-8"></app-icon>
+    }
+  </button>
+
+  <!-- Chat Window -->
+  @if (isChatOpen()) {
+    <app-chat (closeChat)="toggleChat()"></app-chat>
+  }
+
+  <!-- Report Modal -->
+  @if (isReportModalOpen()) {
+    <app-report-modal (close)="closeReportModal()"></app-report-modal>
+  }
+</div>
